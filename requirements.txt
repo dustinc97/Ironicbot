@@ -1,3 +1,4 @@
+mongoengine
 discord.py[voice]
 websockets
 aiohttp

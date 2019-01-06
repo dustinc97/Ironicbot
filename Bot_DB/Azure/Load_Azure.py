@@ -9,8 +9,8 @@ member_dict = {
     'redvelvet': {'wendy': 0, 'joy': 0, 'irene': 0, 'seulgi': 0, 'yeri': 0}
 }
 
-azure_account_name = 'ironicbot2' # os.environ.get('AZURE_ACCOUNT_NAME')
-azure_account_key = 'R8yyc9nmF5d7zbcF4Xp4ty5kWREE7yPdOIpQssDmXMU3QpLWhIzFIKCMRrh97shshYhH9GgEMixJzpRkb6+ENg==' # os.environ.get('AZURE_ACCOUNT_KEY')
+azure_account_name = os.environ.get('AZURE_ACCOUNT_NAME')
+azure_account_key = os.environ.get('ACCOUNT_KEY')
 
 
 async def load_azure():

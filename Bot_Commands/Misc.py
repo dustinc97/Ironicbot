@@ -5,7 +5,7 @@ import platform
 
 class Misc:
 
-    def __init__(self, client):
+    def __init__(self, client, db_connection):
         self.client = client
 
     @commands.command(pass_context=True)

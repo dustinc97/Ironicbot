@@ -11,7 +11,7 @@ from Bot_DB.Azure.Load_Azure import member_dict
 
 class Fun:
 
-    def __init__(self, client):
+    def __init__(self, client, db_connection):
         self.client = client
 
     async def member_pic(self, member_name, group_name):
@@ -43,7 +43,7 @@ class Fun:
         await asyncio.sleep(100)
 
     @commands.command(pass_context=True)
-    async def redvelvet(self,ctx, arg):
+    async def redvelvet(self, arg):
         """Give it a name, Get a picture."""
         await self.member_pic(arg, 'redvelvet')
 
@@ -59,7 +59,7 @@ class Fun:
         await asyncio.sleep(100)
 
     @commands.command(pass_context=True)
-    async def dab(self):
+    async def dab(self, message: discord.Message):
 
         """Summon Momo to dab on them haters."""
 
