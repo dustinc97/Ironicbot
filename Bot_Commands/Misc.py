@@ -28,9 +28,11 @@ class Misc:
     @commands.command()
     async def exp(self, member : discord.Member):
         """Check someone's exp"""
-        description = "**{0.name}** has `{1}` exp".format(member, Users.objects(user_id=member.id).get().exp)
+        user_entry = Users.objects(user_id=member.id).get()
+        description = "**{0.name}** has `{1}` exp".format(member, user_entry.exp)
 
         tmp = discord.Embed(description=description)
+        tmp.add_field(name="Level", value=str(user_entry.level), inline=True)
         tmp.set_thumbnail(url=member.avatar_url)
 
         await self.client.say(embed=tmp)

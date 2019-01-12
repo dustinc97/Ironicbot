@@ -1,3 +1,4 @@
+import math
 
 import discord
 import mongoengine
@@ -20,7 +21,7 @@ class MiscEvents:
             len(self.client.servers)) + ' servers | Connected to ' + str(len(set(self.client.get_all_members()))) + ' users')
 
         print('Loading Azure...')
-        await load_azure()
+        #await load_azure()
         print('Done')
 
         for member in self.client.get_all_members():
@@ -46,10 +47,13 @@ class MiscEvents:
             current_exp = user_entry.exp
             elapsedTime = datetime.datetime.utcnow() - user_entry.time_stamp
 
-            print(elapsedTime.total_seconds())
-
             if int(elapsedTime.total_seconds()) > 30:
-                print("Adding points")
+
+                level = int(.9 * math.sqrt(current_exp))
+
+                if level > user_entry.level:
+                    await self.client.say("Level get! You are now level " + str(level))
+
                 multi = 1
 
                 if int(elapsedTime.total_seconds()) < 600:
@@ -59,7 +63,9 @@ class MiscEvents:
                     multi = 3
 
                 Users.objects(user_id=author_id).modify(upsert=True, new=True, exp=((randint(10, 30) + current_exp) * multi),
-                                                        time_stamp=datetime.datetime.utcnow())
+                                                        time_stamp=datetime.datetime.utcnow(), level=level)
+            else:
+                Users.objects(user_id=author_id).modify(upsert=True, new=True, time_stamp=datetime.datetime.utcnow())
 
         except mongoengine.NotUniqueError:
             pass
