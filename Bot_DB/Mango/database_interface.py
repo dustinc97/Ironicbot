@@ -1,6 +1,6 @@
 import mongoengine
 import os
-from Bot_DB.Mango.database_models import User
+from Bot_DB.Mango.database_models import User, Users
 
 class database_connection:
     def __init__(self):

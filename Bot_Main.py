@@ -2,13 +2,11 @@ import asyncio
 import os
 
 import mongoengine
-from azure.storage.blob import BlockBlobService
 from discord.ext.commands import Bot
 
 from Bot_Commands.Fun import Fun
 from Bot_Commands.Misc import Misc
 from Bot_Events.Misc_Events import MiscEvents
-from Bot_DB.Mango.database_interface import database_connection
 
 bot_token = os.environ.get('BOT_TOKEN')
 

@@ -2,10 +2,11 @@
 import discord
 import mongoengine
 from random import randint
+import datetime
 
 from Bot_DB.Azure.Load_Azure import load_azure
 from Bot_DB.Mango.database_interface import database_connection
-from Bot_DB.Mango.database_models import User
+from Bot_DB.Mango.database_models import Users
 
 
 class MiscEvents:
@@ -24,17 +25,15 @@ class MiscEvents:
 
         for member in self.client.get_all_members():
             try:
-                User(user_id=int(member.id), exp=0).save()
+                Users(user_id=int(member.id), exp=0).save()
             except:
                 pass
-
-        print("Loaded users")
 
         return await self.client.change_presence(game=discord.Game(name='with bits | $versioninfo'))
 
     async def on_member_join(self, member: discord.Member):
         try:
-            User_tmp = User(user_id=int(member.id), exp=0).save()
+            User_tmp = Users(user_id=int(member.id), exp=0).save()
         except mongoengine.NotUniqueError:
             pass
 
@@ -43,10 +42,24 @@ class MiscEvents:
             m_author = message.author
             author_id = m_author.id
 
-            user_entry = User.objects(user_id=author_id).get()
+            user_entry = Users.objects(user_id=author_id).get()
             current_exp = user_entry.exp
+            elapsedTime = datetime.datetime.utcnow() - user_entry.time_stamp
 
-            User.objects(user_id=author_id).modify(upsert=True, new=True, exp=randint(10, 30)+current_exp)
+            print(elapsedTime.total_seconds())
+
+            if int(elapsedTime.total_seconds()) > 30:
+                print("Adding points")
+                multi = 1
+
+                if int(elapsedTime.total_seconds()) < 600:
+                    multi = 2
+
+                if int(elapsedTime.total_seconds()) < 120:
+                    multi = 3
+
+                Users.objects(user_id=author_id).modify(upsert=True, new=True, exp=((randint(10, 30) + current_exp) * multi),
+                                                        time_stamp=datetime.datetime.utcnow())
 
         except mongoengine.NotUniqueError:
             pass
