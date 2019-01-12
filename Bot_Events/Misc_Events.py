@@ -62,7 +62,7 @@ class MiscEvents:
                 if int(elapsedTime.total_seconds()) < 120:
                     multi = 3
 
-                Users.objects(user_id=author_id).modify(upsert=True, new=True, exp=((randint(10, 30) + current_exp) * multi),
+                Users.objects(user_id=author_id).modify(upsert=True, new=True, exp=(((randint(10, 30)*multi) + current_exp)),
                                                         time_stamp=datetime.datetime.utcnow(), level=level)
             else:
                 Users.objects(user_id=author_id).modify(upsert=True, new=True, time_stamp=datetime.datetime.utcnow())
