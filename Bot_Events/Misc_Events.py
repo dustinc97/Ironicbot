@@ -21,7 +21,7 @@ class MiscEvents:
             len(self.client.servers)) + ' servers | Connected to ' + str(len(set(self.client.get_all_members()))) + ' users')
 
         print('Loading Azure...')
-        #await load_azure()
+        await load_azure()
         print('Done')
 
         for member in self.client.get_all_members():
