@@ -51,9 +51,6 @@ class MiscEvents:
 
                 level = int(.9 * math.sqrt(current_exp))
 
-                if level > user_entry.level:
-                    await self.client.say("Level get! You are now level " + str(level))
-
                 multi = 1
 
                 if int(elapsedTime.total_seconds()) < 600:
