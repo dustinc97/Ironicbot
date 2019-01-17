@@ -12,6 +12,7 @@ bot_token = os.environ.get('BOT_TOKEN')
 
 startup_extensions = ['Fun', 'Misc', 'Moderation', 'Misc_Events']
 
+# Connect to the mongodb using mongoengine
 
 def connect():
     db_username = os.environ.get('DB_USERNAME')
