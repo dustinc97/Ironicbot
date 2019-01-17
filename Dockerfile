@@ -1,8 +1,7 @@
-FROM python:3.7.1
+FROM python:3.6-alpine
 
-WORKDIR /IronicBot-Release
-
-COPY . /IronicBot-Release
+COPY . /IronicBot
+WORKDIR /IronicBot
 
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
