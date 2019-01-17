@@ -9,7 +9,7 @@ class Misc:
         self.client = client
 
     @commands.command(pass_context=True)
-    async def versioninfo(self):
+    async def versioninfo(self, ctx):
         """Gives some info on the Bot."""
 
         tmp = discord.Embed(title='Bot Version Info', type='rich',
@@ -17,16 +17,16 @@ class Misc:
                                         + 'Discord.py Ver: ' + discord.__version__ + '\n\n' + 'Ironic Bot Ver: 1.3 Stable\n\n' +
                                         'Created with weeb love by Perfect Irony')
 
-        await self.client.say(embed=tmp)
-        await asyncio.sleep(100)
+        await ctx.send(embed=tmp)
 
     @commands.command()
-    async def joined(self, member : discord.Member):
+    async def joined(self, ctx, member : discord.Member):
         """Says when a member joined."""
-        await self.client.say('{0.name} joined in {0.joined_at}'.format(member))
+        await ctx.send('{0.name} joined on {0.joined_at}'.format(member))
+
 
     @commands.command()
-    async def exp(self, member : discord.Member):
+    async def exp(self,ctx, member : discord.Member):
         """Check someone's exp"""
         user_entry = Users.objects(user_id=member.id).get()
         description = "**{0.name}** has `{1}` exp".format(member, user_entry.exp)
@@ -35,6 +35,7 @@ class Misc:
         tmp.add_field(name="Level", value=str(user_entry.level), inline=True)
         tmp.set_thumbnail(url=member.avatar_url)
 
-        await self.client.say(embed=tmp)
+        await ctx.send(embed=tmp)
+
 
 

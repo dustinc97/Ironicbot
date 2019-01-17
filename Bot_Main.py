@@ -30,7 +30,7 @@ def connect():
 def run_client(*args, **kwargs):
 
     while True:
-        client = Bot(description="Ironic Bot by Perfect_Irony#5196", command_prefix="$", pm_help=False)
+        client = Bot(description="Ironic Bot by Perfect_Irony#5196", command_prefix="~", pm_help=False)
 
         mongo_connection = connect()
 

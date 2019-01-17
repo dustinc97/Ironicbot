@@ -28,22 +28,3 @@ class database_connection:
                 User_tmp = User(user_id=int(user.id), exp=0).save()
             except mongoengine.NotUniqueError:
                 pass
-
-    async def add_user(self, member):
-        try:
-            User_tmp = User(user_id=int(member.id), exp=0).save()
-        except mongoengine.NotUniqueError:
-            pass
-
-    async def add_exp(self, message):
-        try:
-            m_author = message.author
-            author_id = m_author.id
-            user_entry = User.objects.find(user_id=str(author_id)).first()
-            current_exp = user_entry.exp
-            user_entry.exp = current_exp + 10
-
-            user_entry.save()
-
-        except mongoengine.NotUniqueError:
-            pass

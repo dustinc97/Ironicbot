@@ -20,6 +20,7 @@ async def load_azure():
     groups = ['twice', 'redvelvet']
 
     for group in groups:
+        print("     " + group + "...", end='')
         for member in member_dict[group]:
             generator = block_blob_service.list_blobs(group, prefix=member)
             count = 0
@@ -28,5 +29,7 @@ async def load_azure():
                 count += 1
 
             member_dict[group][member] = count
+        print("done")
 
-    await asyncio.sleep(100)
+    print("done loading azure")
+    await asyncio.sleep(1)

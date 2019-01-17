@@ -14,7 +14,7 @@ class Fun:
     def __init__(self, client, db_connection):
         self.client = client
 
-    async def member_pic(self, member_name, group_name):
+    async def member_pic(self, ctx, member_name, group_name):
         try:
             max_num = member_dict[group_name][str.lower(member_name)]
             member_name = str.lower(member_name)
@@ -28,33 +28,33 @@ class Fun:
             tmp.set_image(url=image_url)
             tmp.set_footer(text=random.choice(messages))
 
-            await self.client.say(embed=tmp)
+            await ctx.send(embed=tmp)
         except Exception as exception:
             print("Oops! Something went wrong... " + str(exception))
-            await self.client.say("Oops! Something went wrong... " + str(exception))
+            await ctx.send("Oops! Something went wrong... " + str(exception))
 
         await asyncio.sleep(100)
 
     @commands.command(pass_context=True)
-    async def twice(self,ctx, arg):
+    async def twice(self, ctx, arg):
         """Give it a name, Get a picture."""
 
-        await self.member_pic(arg, 'twice')
+        await self.member_pic(ctx, arg, 'twice')
         await asyncio.sleep(100)
 
     @commands.command(pass_context=True)
-    async def redvelvet(self, arg):
+    async def redvelvet(self, ctx, arg):
         """Give it a name, Get a picture."""
-        await self.member_pic(arg, 'redvelvet')
+        await self.member_pic(ctx, arg, 'redvelvet')
 
         await asyncio.sleep(100)
 
     @commands.command(pass_context=True)
-    async def nice(self):
+    async def nice(self, ctx):
 
         """Just says nice."""
 
-        await self.client.say("Nice.")
+        await ctx.send("Nice.")
 
         await asyncio.sleep(100)
 
@@ -63,9 +63,9 @@ class Fun:
 
         """Summon Momo to dab on them haters."""
 
-        author = str(self.message.author.mention)
+        author = str(message.author.mention)
 
-        target = self.message.content[5:]
+        target = message.content[5:]
 
         if target == '':
             tmp = discord.Embed(description=author + ' DABBED')
@@ -74,18 +74,16 @@ class Fun:
 
         tmp.set_image(url='https://ironicbot2.azureedge.net/twice/gif/momodab.gif')
         tmp.set_footer(text='Powered by Memes')
-        await self.client.say(embed=tmp)
-
-        await asyncio.sleep(100)
+        await ctx.send(embed=tmp)
 
     @commands.command(pass_context=True)
-    async def karma(self, ctx):
+    async def karma(self, message: discord.Message):
 
         """Karma comes back to bite ya."""
 
-        author = str(ctx.message.author.mention)
+        author = str(message.author.mention)
 
-        target = ctx.message.content[7:]
+        target = message.content[7:]
 
         if target == '':
             tmp = discord.Embed(description="WASTED!")
@@ -94,9 +92,7 @@ class Fun:
 
         tmp.set_image(url='https://ironicbot2.azureedge.net/twice/gif/ezgif-1-073e5fd8fe.gif')
         tmp.set_footer(text='Powered by Memes')
-        await self.client.say(embed=tmp)
-
-        await asyncio.sleep(100)
+        await ctx.send(embed=tmp)
 
     @commands.command(pass_context=True)
     async def cutecat(self, ctx):
@@ -107,6 +103,4 @@ class Fun:
 
         tmp.set_image(url='https://thumbs.gfycat.com/AgileHardtofindBug-small.gif')
         tmp.set_footer(text='Powered by Memes')
-        await self.client.say(embed=tmp)
-
-        await asyncio.sleep(100)
+        await ctx.send(embed=tmp)
