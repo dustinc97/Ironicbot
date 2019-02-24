@@ -3,7 +3,7 @@ FROM python:3.6-alpine
 COPY . /IronicBot
 WORKDIR /IronicBot
 
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+RUN pip install -r requirements.txt
 
 EXPOSE 80
 
