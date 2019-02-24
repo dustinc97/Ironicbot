@@ -7,6 +7,7 @@ RUN pip install -r requirements.txt
 
 ENV NAME Ironic_Bot
 
-COPY . .
+COPY . /IronicBot
+WORKDIR /IronicBot
 
 CMD ["python", "./Bot_Main.py"]
