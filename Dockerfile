@@ -1,13 +1,10 @@
-FROM gorialis/discord.py:3.6-alpine
+FROM gorialis/discord.py:3.6.8-alpine-rewrite-full
 
 WORKDIR /app
 
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
-ENV NAME Ironic_Bot
-
-COPY . /IronicBot
-WORKDIR /IronicBot
+COPY . .
 
 CMD ["python", "./Bot_Main.py"]
