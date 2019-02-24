@@ -1,7 +1,3 @@
-import discord
-from discord.ext import commands
-
-
 class Moderation:
     def __init__(self, client):
         self.client = client
@@ -10,5 +6,3 @@ class Moderation:
         pass
 
 
-def setup(client):
-    client.add_cog(Moderation(client))

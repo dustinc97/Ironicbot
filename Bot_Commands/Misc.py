@@ -1,8 +1,12 @@
-import asyncio
-import discord
-from discord.ext import commands
 import platform
+from datetime import datetime
+
+import discord  # discord api
+from discord.ext import commands  # commands extension
+
 from Bot_DB.Mango.database_models import Users
+
+
 class Misc:
 
     def __init__(self, client, db_connection):
@@ -37,5 +41,29 @@ class Misc:
 
         await ctx.send(embed=tmp)
 
+    @commands.command()
+    async def userinfo(self, ctx, member: discord.User):
+        tmp = discord.Embed(
+            title="User info",
+            type='rich')
 
+        tmp.set_thumbnail(url=member.avatar_url)
 
+        tmp.add_field(name='Username:', value=member.name + '#' + member.discriminator)
+        tmp.add_field(name='ID:', value=member.id)
+        tmp.add_field(name='Time on Discord:', value=str(datetime.now() - member.created_at).split(',')[0])
+
+        if member.bot:
+            tmp.add_field(name='Bot:', value='This user is a bot.')
+
+        tmp.set_footer(text='For full size avatar try $avatar')
+        await ctx.send(embed=tmp)
+
+    @commands.command()
+    async def avatar(self, ctx, member: discord.User):
+        tmp = discord.Embed()
+
+        tmp.set_image(url=member.avatar_url)
+        tmp.set_footer(text=member.name + '#' + member.discriminator)
+
+        await ctx.send(embed=tmp)

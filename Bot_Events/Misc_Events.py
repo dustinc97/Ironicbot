@@ -1,12 +1,10 @@
+import datetime
 import math
+from random import randint
 
 import discord
 import mongoengine
-from random import randint
-import datetime
 
-from Bot_DB.Azure.Load_Azure import load_azure
-from Bot_DB.Mango.database_interface import database_connection
 from Bot_DB.Mango.database_models import Users
 
 
@@ -22,7 +20,8 @@ class MiscEvents:
               + ' users')
 
         print('\nLoading Azure:')
-        await load_azure()
+        # await load_azure()
+
 
         print('\nLoading user DB...', end='')
         for member in self.client.get_all_members():

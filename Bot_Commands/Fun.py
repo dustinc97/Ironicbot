@@ -1,12 +1,10 @@
 import asyncio
-import hashlib
 import random
-import time
+
 import discord
-import re
 from discord.ext import commands
 
-from Bot_DB.Azure.Load_Azure import member_dict
+from Bot_DB.Azure.Load_Azure import test_dict
 
 
 class Fun:
@@ -16,7 +14,7 @@ class Fun:
 
     async def member_pic(self, ctx, member_name, group_name):
         try:
-            max_num = member_dict[group_name][str.lower(member_name)]
+            max_num = test_dict[group_name][str.lower(member_name)]
             member_name = str.lower(member_name)
             image_url = 'https://ironicbot2.azureedge.net/{}/{}/{}.jpg'.format(group_name, member_name,
                                                                                random.randrange(1, max_num))
