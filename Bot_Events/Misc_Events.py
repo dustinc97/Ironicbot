@@ -7,7 +7,7 @@ from discord.ext import commands
 import mongoengine
 
 from Bot_DB.Azure.Load_Azure import load_azure
-from Bot_DB.Mango.database_models import Users
+from Mango.database_models import Users
 
 
 class MiscEvents(commands.Cog):

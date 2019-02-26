@@ -4,7 +4,7 @@ from datetime import datetime
 import discord  # discord api
 from discord.ext import commands  # commands extension
 
-from Bot_DB.Mango.database_models import Users
+from Mango.database_models import Users
 
 
 class Misc(commands.Cog):
@@ -65,6 +65,15 @@ class Misc(commands.Cog):
 
         tmp.set_image(url=member.avatar_url)
         tmp.set_footer(text=member.name + '#' + member.discriminator)
+
+        await ctx.send(embed=tmp)
+
+    @commands.command()
+    async def emoji(self, ctx, emoji : discord.Emoji):
+        tmp = discord.Embed()
+
+        tmp.set_image(url=emoji.url)
+        tmp.set_footer(text='Name:' + emoji.name + '   ID:' + emoji.id)
 
         await ctx.send(embed=tmp)
 
