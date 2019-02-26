@@ -7,9 +7,9 @@ from discord.ext import commands  # commands extension
 from Bot_DB.Mango.database_models import Users
 
 
-class Misc:
+class Misc(commands.Cog):
 
-    def __init__(self, client, db_connection):
+    def __init__(self, client):
         self.client = client
 
     @commands.command(pass_context=True)
@@ -67,3 +67,6 @@ class Misc:
         tmp.set_footer(text=member.name + '#' + member.discriminator)
 
         await ctx.send(embed=tmp)
+
+def setup(bot):
+    bot.add_cog(Misc(bot))
