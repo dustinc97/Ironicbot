@@ -4,7 +4,7 @@ import random
 import discord
 from discord.ext import commands
 
-from Bot_DB.Azure.Load_Azure import test_dict
+from Bot_DB.Azure.Load_Azure import test_dict, groups
 
 
 class FunCog(commands.Cog, name="Fun stuff"):
@@ -29,23 +29,36 @@ class FunCog(commands.Cog, name="Fun stuff"):
             await ctx.send(embed=tmp)
         except Exception as exception:
             print("Oops! Something went wrong... " + str(exception))
-            await ctx.send("Oops! Something went wrong... " + str(exception))
+            if str(exception) not in groups:
+                await ctx.send("Oops! Something went wrong... " + str(exception))
 
         await asyncio.sleep(100)
 
     @commands.command(pass_context=True)
-    async def twice(self, ctx, arg):
-        """Give it a name, Get a picture."""
-
-        await self.member_pic(ctx, arg, 'twice')
-        await asyncio.sleep(100)
+    async def twice(self, ctx):
+        """DEPRECATED: to be removed"""
+        await ctx.send('Please use the new command: $kpic group member')
 
     @commands.command(pass_context=True)
     async def redvelvet(self, ctx, arg):
         """Give it a name, Get a picture."""
-        await self.member_pic(ctx, arg, 'redvelvet')
+        await ctx.send('Please use the new command: $kpic group member')
 
-        await asyncio.sleep(100)
+
+    @commands.command(pass_context=True)
+    async def kpic(self, ctx, *args):
+        """$kpic group member"""
+
+        print(len(args))
+
+        if len(args) == 2:
+            print('2 args')
+            await self.member_pic(ctx, args[1], args[0])
+
+        if len(args) == 1:
+            print('1 arg')
+            await self.member_pic(ctx, 'group', args[0])
+
 
     @commands.command(pass_context=True)
     async def nice(self, ctx):
@@ -57,7 +70,7 @@ class FunCog(commands.Cog, name="Fun stuff"):
         await asyncio.sleep(100)
 
     @commands.command(pass_context=True)
-    async def dab(self, message: discord.Message):
+    async def dab(self, ctx, message: discord.Message):
 
         """Summon Momo to dab on them haters."""
 
@@ -70,7 +83,7 @@ class FunCog(commands.Cog, name="Fun stuff"):
         else:
             tmp = discord.Embed(description=author + ' DABBED ON ' + target)
 
-        tmp.set_image(url='https://ironicbot2.azureedge.net/twice/gif/momodab.gif')
+        tmp.set_image(url='https://ironicbot2.azureedge.net/extras/gif/momodab.gif')
         tmp.set_footer(text='Powered by Memes')
         await ctx.send(embed=tmp)
 
