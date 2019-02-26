@@ -1,20 +1,11 @@
-import asyncio
+import logging
 import os
 
 import mongoengine
-import discord
 from discord.ext import commands
 
-from Bot_Commands.Fun import FunCog
-from Bot_Commands.Misc import Misc
 from Bot_DB.Azure.Load_Azure import load_azure
 from Bot_Events.Misc_Events import MiscEvents
-
-import logging
-
-
-
-import sys, traceback
 
 bot_token = os.environ.get('BOT_TOKEN')
 
@@ -35,7 +26,8 @@ def connect():
 
     return mongoengine.connection
 
-# Run the client using the built-in client.run
+
+# Run the client using the built-in client.run. Clear restart is redundant, but keeping it just in case.
 def run_client(*args, **kwargs):
 
     while True:
@@ -61,7 +53,7 @@ def run_client(*args, **kwargs):
         bot.add_cog(MiscEvents(bot,mongo_connection))
 
         try:
-            bot.run('NDk0MDE4NTI0MDM4MDM3NTA0.DyFEFA.Qhy5mWCIMBpHbk-bZmunCjidFEM')
+            bot.run(bot_token)
         finally:
             bot.clear()
             print('restarting')
