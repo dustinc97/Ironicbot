@@ -70,7 +70,7 @@ class FunCog(commands.Cog, name="Fun stuff"):
         await asyncio.sleep(100)
 
     @commands.command(pass_context=True)
-    async def dab(self, message: discord.Message):
+    async def dab(self, ctx, message: discord.Message):
 
         """Summon Momo to dab on them haters."""
 
@@ -83,7 +83,7 @@ class FunCog(commands.Cog, name="Fun stuff"):
         else:
             tmp = discord.Embed(description=author + ' DABBED ON ' + target)
 
-        tmp.set_image(url='https://ironicbot2.azureedge.net/twice/gif/momodab.gif')
+        tmp.set_image(url='https://ironicbot2.azureedge.net/extras/gif/momodab.gif')
         tmp.set_footer(text='Powered by Memes')
         await ctx.send(embed=tmp)
 
