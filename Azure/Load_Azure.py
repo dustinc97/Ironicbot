@@ -47,5 +47,4 @@ def load_azure():
     # Print the dict out to the console
     pprint.pprint(test_dict)
 
-    print("done loading azure")
     asyncio.sleep(1)

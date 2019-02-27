@@ -4,7 +4,7 @@ import random
 import discord
 from discord.ext import commands
 
-from Bot_DB.Azure.Load_Azure import test_dict, groups
+from Azure.Load_Azure import test_dict, groups
 
 
 class FunCog(commands.Cog, name="Fun stuff"):
