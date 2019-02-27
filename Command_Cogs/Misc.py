@@ -78,6 +78,7 @@ class Misc(commands.Cog):
         await ctx.send(embed=tmp)
 
     @commands.command()
+    @commands.has_permissions(kick_members=True)
     async def addcom(self, ctx):
         tmp = add_command(ctx.message.clean_content[8:], self.client, ctx)
 
