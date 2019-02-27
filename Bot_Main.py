@@ -25,7 +25,7 @@ def connect():
                         host=db_host)
 
     print(' Done.\n\n Loading Azure:')
-    #load_azure()
+    load_azure()
 
     return mongoengine.connection
 
