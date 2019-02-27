@@ -7,6 +7,7 @@ import mongoengine
 from discord.ext import commands
 
 from Azure.Load_Azure import load_azure
+from Command_Cogs.custom_commands import handle_msg
 from Mango.database_interface import add_exp, Users, Guilds, Custom_Command
 
 bot_token = os.environ.get('BOT_TOKEN')
@@ -34,13 +35,8 @@ bot = commands.Bot(description="Ironic Bot by Perfect_Irony#5196", command_prefi
 
 @bot.event
 async def on_message(message):
+    await handle_msg(message)
     await bot.process_commands(message)
-    guild_id = message.guild.id
-
-
-
-    #if str(message).startswith()
-
 
     await add_exp(message, bot)
 
@@ -68,7 +64,7 @@ async def on_ready():
         for guild in bot.guilds:
 
             try:
-                Guilds(guild_id=int(guild.id), custom_commands=Custom_Command(command_name='foo', response='bar')).save()
+                Guilds(guild_id=int(guild.id), custom_commands=[Custom_Command(command_name='foo', response='bar')]).save()
             except mongoengine.errors.OperationError as e:
                 pass
             except Exception as e:

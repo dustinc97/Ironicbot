@@ -18,7 +18,7 @@ class Users(mongoengine.Document):
     level = mongoengine.IntField(default=1,min_value=1)
 
 class Custom_Command(mongoengine.EmbeddedDocument):
-    command_name = mongoengine.StringField(max_length=20)
+    command_name = mongoengine.StringField(max_length=20, unique=True)
     response = mongoengine.StringField(max_length=140)
 
 class Guilds(mongoengine.Document):
@@ -67,17 +67,20 @@ async def add_exp(message, client):
         except Exception as error:
             print('\n Something happened while adding EXP to user: ' + str(error))
 
-def add_command(name, content, client, ctx):
+def add_command(content, client, ctx):
+
+    print(content)
+    split_str = content.split(' ', maxsplit=1)
 
     try:
-        guild = Guilds.objects(guild_id=ctx.guild.id).first()
+        guild = Guilds()
 
-        command = Custom_Command(command_name=name, response=content)
-        print(guild.custom_commands)
-        guild.custom_commands.append(command)
+        guild = Guilds.objects(guild_id=ctx.guild.id).get()
+
+        guild.custom_commands.append(Custom_Command(command_name=split_str[0], response=split_str[1]))
         guild.save()
         return True
-
+    
     except Exception as e:
         print(e)
         return e
