@@ -80,7 +80,7 @@ def add_command(content, client, ctx):
         guild.custom_commands.append(Custom_Command(command_name=split_str[0], response=split_str[1]))
         guild.save()
         return True
-    
+
     except Exception as e:
         print(e)
         return e

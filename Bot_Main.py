@@ -35,8 +35,8 @@ bot = commands.Bot(description="Ironic Bot by Perfect_Irony#5196", command_prefi
 
 @bot.event
 async def on_message(message):
-    await handle_msg(message)
-    await bot.process_commands(message)
+    if await handle_msg(message) != True:
+        await bot.process_commands(message)
 
     await add_exp(message, bot)
 
