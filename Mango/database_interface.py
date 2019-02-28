@@ -24,8 +24,8 @@ class Custom_Command(mongoengine.EmbeddedDocument):
 class Guilds(mongoengine.Document):
     guild_id = mongoengine.IntField(unique=True)
     custom_commands = mongoengine.EmbeddedDocumentListField(Custom_Command)
-    mod_channel = mongoengine.IntField(unique=True)
-    disabled_channels = mongoengine.ListField(field=mongoengine.IntField(unique=True))
+    mod_channel = mongoengine.IntField()
+    disabled_channels = mongoengine.ListField(field=mongoengine.IntField())
 
 async def add_exp(message, client):
 
@@ -41,8 +41,6 @@ async def add_exp(message, client):
             elapsedTime = datetime.datetime.utcnow() - user_entry.time_stamp
 
             if int(elapsedTime.total_seconds()) > 5:
-
-                print('Adding xp')
 
                 level = int(.9 * math.sqrt(current_exp))
 
@@ -67,9 +65,12 @@ async def add_exp(message, client):
         except Exception as error:
             print('\n Something happened while adding EXP to user: ' + str(error))
 
-def add_command(content, client, ctx):
 
-    print(content)
+async def add_command(content, ctx):
+    if not content.startswith('$'):
+        await ctx.send('For sake of consistency, please begin commands with ' + '$')
+        return False
+
     split_str = content.split(' ', maxsplit=1)
 
     try:

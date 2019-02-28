@@ -3,12 +3,11 @@ import os
 
 import discord
 import mongoengine
-
 from discord.ext import commands
 
 from Azure.Load_Azure import load_azure
 from Command_Cogs.custom_commands import handle_msg
-from Mango.database_interface import add_exp, Users, Guilds, Custom_Command
+from Mango.database_interface import add_exp, Users, Guilds
 
 bot_token = os.environ.get('BOT_TOKEN')
 
@@ -25,7 +24,8 @@ def connect():
                         host=db_host)
 
     print(' Done.\n\n Loading Azure:')
-    #load_azure()
+    # TODO Uncomment azure
+    load_azure()
 
     return mongoengine.connection
 
@@ -61,12 +61,15 @@ async def on_ready():
 
     print('Loading guilds to DB...')
     if Guilds.objects.count() < len(set(bot.guilds)):
-        for guild in bot.guilds:
 
+        for guild in bot.guilds:
             try:
-                Guilds(guild_id=int(guild.id), custom_commands=[Custom_Command(command_name='foo', response='bar')]).save()
+                id = guild.id
+                Guilds(guild_id=id, custom_commands=[]).save()
+                print('     Added: ' + guild.name)
             except mongoengine.errors.OperationError as e:
-                pass
+                print(' ' + str(e))
+                print(' This error accured when adding this server: ' + guild.name + ' id:' + str(guild.id))
             except Exception as e:
                 print(e)
     else:
@@ -92,6 +95,7 @@ def run_client(*args, **kwargs):
         mongo_connection = connect()
         print("\n\nDone loading databases.\n")
 
+        # TODO Uncomment logging
         logging.basicConfig(level=logging.INFO)
 
         initial_extensions = ['Command_Cogs.Fun',
@@ -102,7 +106,7 @@ def run_client(*args, **kwargs):
             try:
                 bot.load_extension(extension)
             except Exception as e:
-                print(f'Failed to load extension {extension}. error: ' + str(e.with_traceback()))
+                print(f'Failed to load extension {extension}. error: ' + str(e))
 
                 bot.load_extension('Bot_Events.Misc_Events')
 

@@ -4,7 +4,7 @@ from datetime import datetime
 import discord  # discord api
 from discord.ext import commands  # commands extension
 
-from Mango.database_interface import Users, add_command, Guilds
+from Mango.database_interface import Users, add_command
 
 
 class Misc(commands.Cog):
@@ -80,10 +80,12 @@ class Misc(commands.Cog):
     @commands.command()
     @commands.has_permissions(kick_members=True)
     async def addcom(self, ctx):
-        tmp = add_command(ctx.message.clean_content[8:], self.client, ctx)
+        tmp = await add_command(ctx.message.clean_content[8:], ctx)
 
         if tmp == True:
             await ctx.send('Command added!')
+        elif tmp == False:
+            pass
         else:
             await ctx.send('Oops something went wrong...' + str(tmp))
 
